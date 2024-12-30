@@ -1,12 +1,27 @@
 // src/views/home.jsx
-import React, { useState, useEffect } from 'react';
-import ServiceList from '@/components/ServiceList';  // El componente que muestra la lista de servicios
-import ServiceModal from '@/components/ServiceModal';  // El modal para mostrar detalles de un servicio
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';  // Importamos useNavigate para la navegación
+import ServiceList from '@/components/ServiceList';
+import ServiceModal from '@/components/ServiceModal';
 import Information from '../../components/information';
 
 export default function Home() {
 
   const [selectedService, setSelectedService] = useState(null);  // Estado para el servicio seleccionado
+  const navigate = useNavigate();  // Hook para navegar a otras páginas
+
+  // Crear referencias para las secciones
+  const informationSectionRef = useRef(null);
+  const servicesSectionRef = useRef(null);
+
+  // Funciones de desplazamiento a cada sección
+  const scrollToInformation = () => {
+    informationSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToServices = () => {
+    servicesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const handleServiceClick = (service) => {
     setSelectedService(service);  // Establecemos el servicio seleccionado cuando se hace clic
@@ -16,10 +31,27 @@ export default function Home() {
     setSelectedService(null);  // Cerramos el modal
   };
 
+  // Función para redirigir a la página de doctores
+  const goToDoctors = () => {
+    navigate('./medical-team');  // Navegamos a la página de doctores
+  };
+ 
   return (
-    <div className="content">
-      <Information/> 
-      <ServiceList onClickService={handleServiceClick} />  {/* Pasamos la función para abrir el modal */}
+    <React.Fragment>
+      {/* Botones para desplazarse */}
+      <div>
+        <button onClick={goToDoctors}>Ir a Doctores</button> {/* Botón actualizado */}
+      </div>
+
+      {/* Sección de Información */}
+      <div ref={informationSectionRef}>
+        <Information />
+      </div>
+
+      {/* Sección de Lista de Servicios */}
+      <div ref={servicesSectionRef}>
+        <ServiceList onClickService={handleServiceClick} />
+      </div>
 
       {/* Si hay un servicio seleccionado, mostramos el modal */}
       {selectedService && (
@@ -28,6 +60,6 @@ export default function Home() {
           onClose={handleCloseModal}  // Función para cerrar el modal
         />
       )}
-    </div>
+    </React.Fragment>
   );
 }

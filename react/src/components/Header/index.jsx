@@ -5,15 +5,8 @@ import PropTypes from 'prop-types';
 
 const Header = () => {
 return (
-    <header>
-    <nav>
-        <ul>
-        <li><Link to="/home">Home</Link></li>
-        <li><Link to="/medical-team">Medical Team</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
-        </ul>
-    </nav>
-    </header>
+<header>
+</header>
 );
 };
 
