@@ -33,7 +33,7 @@ export default function Home() {
 
   // Función para redirigir a la página de doctores
   const goToDoctors = () => {
-    navigate('./medical-team');  // Navegamos a la página de doctores
+    navigate('/medical-team');  // Navegamos a la página de doctores
   };
  
   return (
